@@ -29,5 +29,6 @@ Features
 * CPU graph
 * memory graph
 * network graph
-* processes 
+* processes
+* free disk space
 
