@@ -121,4 +121,6 @@ ${hr 2}
 ${goto 40}${color7}${font}${alignr} Free          Used / Size            Free %
 ${goto 40}${alignr}$color ${fs_free /}          ${color} ${fs_used /} /$color ${fs_size /}          ${fs_free_perc /} %
 ${voffset 1}${fs_bar 5 /}
+\
+${color}${alignr}CPU: ${hwmon 1 temp 1} °С
 ]];
