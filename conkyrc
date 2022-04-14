@@ -118,9 +118,9 @@ ${goto 40}${color2}${top_mem name 9}${color}${alignr 39}${top cpu 9} %
 ${goto 40}${color2}${top_mem name 10}${color}${alignr 39}${top cpu 10} %
 ${hr 2}
 \
-${goto 40}${color7}${font}${alignr} Free          Used / Size            Free %
-${goto 40}${alignr}$color ${fs_free /}          ${color} ${fs_used /} /$color ${fs_size /}          ${fs_free_perc /} %
+${goto 40}${color7}${font}${alignr 39} Free          Used / Size            Free %
+${goto 40}${alignr 39}$color ${fs_free /}          ${color} ${fs_used /} /$color ${fs_size /}          ${fs_free_perc /} %
 ${voffset 1}${fs_bar 5 /}
 \
-${color}${alignr}CPU: ${hwmon 1 temp 1} °С
+${color}${alignr 39}CPU: ${hwmon 1 temp 1} °С
 ]];
