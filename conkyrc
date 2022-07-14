@@ -122,5 +122,6 @@ ${goto 40}${color7}${font}${alignr 39} Free                                     
 ${goto 40}${alignr 39}$color ${fs_free /}                            ${color} ${fs_used /} /$color ${fs_size /}
 ${voffset 1}${fs_bar 5 /}
 \
-${color}${alignr 39}CPU: ${hwmon 1 temp 1} °С
+${goto 40}${color5}Public IP: ${color2}${execi 3600 curl -s https://api64.ipify.org}    ${color}${alignr 39}CPU: ${hwmon 1 temp 1} °С
+\
 ]];
