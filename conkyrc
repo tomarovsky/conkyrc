@@ -35,7 +35,7 @@ conky.config = {
 	--Textual
 
 	format_human_readable = true,
-	font = 'ubuntu:size=8:bold',
+	font = 'ubuntu:size=8',
 	max_text_width = 0,
 	short_units = true,
 	use_xft = true,
@@ -62,14 +62,14 @@ conky.text = [[
 # INFO
 #------------+
 ${color1}${font :size=14:bold}INFO ${hr 2}${font}
-#${voffset 5}${color1}OS :$alignr${color3}${execi 6000 lsb_release -d | grep 'Descr'|awk {'print $2 " " $3" " $4" " $5'}}
 ${voffset 5}${color1}Kernel :$alignr${color3} $kernel
 ${voffset 2}${color1}Uptime :$alignr${color3} $uptime
 #------------+
 # NETWORK
-#------------+
+#------------
 ${voffset 10}${color1}${font :size=14:bold}NETWORK ${hr 2}${font}
-${voffset 5}${color1}Public IP: ${color3}${execi 3600 curl -s https://api64.ipify.org}${color2}
+${voffset 2}${color1}Location: ${color3}${execi 60 curl ifconfig.co/city 2>/dev/null | tail }, ${execi 60 curl ifconfig.co/country 2>/dev/null | tail }${color2}
+${voffset 5}${color1}Public IP: ${color3}${execi 60 curl ifconfig.co 2>/dev/null | tail }${color2}
 ${voffset -5}${if_existing /proc/net/route wlo1}
 ${upspeedgraph wlo1 26,130 FFFFFF FFFFFF}${alignr}${downspeedgraph wlo1 26,130 FFFFFF FFFFFF}
 ${color1}Up: ${color3}${upspeed wlo1}${color1}${goto 170}Down: ${color3}${downspeed wlo1}
