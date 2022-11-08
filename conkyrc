@@ -52,8 +52,8 @@ conky.config = {
 
 	default_color = '#DDCEA8',  				-- default color and border color
 	color1 = '#458588', 						-- title_color
-	color2 = '#D79921',							-- top memory or processe, graphs
-	color3 = '#DDCEA8',							-- text color
+	color2 = '#d79921',							-- top memory or processe, graphs
+	color3 = '#F2E5BC',							-- text color
 };
 
 
