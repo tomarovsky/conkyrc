@@ -50,7 +50,7 @@ conky.config = {
 
 	--Colours
 
-	default_color = '#DDCEA8',  				-- default color and border color
+	default_color = '#F2E5BC',  				-- default color and border color
 	color1 = '#458588', 						-- title_color
 	color2 = '#d79921',							-- top memory or processe, graphs
 	color3 = '#F2E5BC',							-- text color
@@ -71,12 +71,12 @@ ${voffset 10}${color1}${font :size=14:bold}NETWORK ${hr 2}${font}
 ${voffset 2}${color1}Location: ${color3}${execi 60 curl ifconfig.co/city 2>/dev/null | tail }, ${execi 60 curl ifconfig.co/country 2>/dev/null | tail }${color2}
 ${voffset 5}${color1}Public IP: ${color3}${execi 60 curl ifconfig.co 2>/dev/null | tail }${color2}
 ${voffset -5}${if_existing /proc/net/route wlo1}
-${upspeedgraph wlo1 26,130 FFFFFF FFFFFF}${alignr}${downspeedgraph wlo1 26,130 FFFFFF FFFFFF}
+${upspeedgraph wlo1 26,130 ffffd6 ffffd6}${alignr}${downspeedgraph wlo1 26,130 ffffd6 ffffd6}
 ${color1}Up: ${color3}${upspeed wlo1}${color1}${goto 170}Down: ${color3}${downspeed wlo1}
 ${color1}Sent: ${color3}${totalup wlo1}${color1}${goto 170}Received: ${color3}${totaldown wlo1}
 ${endif}
 ${if_existing /proc/net/route eth0}
-${upspeedgraph eth0 26,130 FFFFFF FFFFFF}${alignr}${downspeedgraph eth0 26,130 FFFFFF FFFFFF}
+${upspeedgraph eth0 26,130 ffffd6 ffffd6}${alignr}${downspeedgraph eth0 26,130 ffffd6 ffffd6}
 ${color1}Up: ${color3}${upspeed eth0}${color1}${goto 170}Down: ${color3}${downspeed eth0}
 ${color1}Sent: ${color3}${totalup eth0}${color1}${goto 170}Received: ${color3}${totaldown eth0}
 ${endif}
@@ -88,7 +88,7 @@ ${voffset 5}${color1}Name: $alignr${color3}${execi 6000 cat /proc/cpuinfo | grep
 ${voffset 2}${color1}Temperature: $alignr${color3}${hwmon 1 temp 1} °C
 ${voffset 2}${color1}Usage: $alignr${color3}${cpu}%
 ${voffset 2}${color1}Freq: $alignr${color3}${freq_g} GHz
-${voffset 2}${color2}${cpugraph 26, 280 FFFFFF FFFFFF -l}
+${voffset 2}${color2}${cpugraph 26, 280 ffffd6 ffffd6 -l}
 #------------+
 #CPU CORES
 #------------+
@@ -110,7 +110,7 @@ ${top name 5}${goto 190}${top cpu 5}${goto 230}${top mem 5}${alignr}${top pid 5}
 #------------+
 ${voffset 10}${color1}${font :size=14:bold}MEMORY ${hr 2}${font}
 ${voffset 5}${color1}Used: ${color3}$mem ($memperc%)${color1}${alignr}Free: ${color3}$memeasyfree
-${color2}${memgraph 26,280 FFFFFF FFFFFF -l}
+${color2}${memgraph 26,280 ffffd6 ffffd6 -l}
 ${voffset 5}${color1}Name${goto 190}MEM%${goto 230} MEM${alignr}PID${color2}
 ${top_mem name 1}${goto 190}${top_mem mem 1}${goto 230} ${top_mem mem_res 1}${alignr}${top pid 1}${color3}
 ${top_mem name 2}${goto 190}${top_mem mem 2}${goto 230} ${top_mem mem_res 2}${alignr}${top pid 2}
@@ -121,7 +121,7 @@ ${top_mem name 5}${goto 190}${top_mem mem 5}${goto 230} ${top_mem mem_res 5}${al
 # DISK
 #------------+
 ${voffset 10}${color1}${font :size=14:bold}DISK ${hr 2}${font}
-${voffset 5}${diskiograph 26,280 FFFFFF FFFFFF -l}
+${voffset 5}${diskiograph 26,280 ffffd6 ffffd6 -l}
 ${color1}Disk I/O:${goto 70}${color3}${diskio}
 ${voffset 1}${color2}${fs_bar 5 /}
 ${voffset 2}${color1}Used: ${color3}${fs_used /}${color1}${goto 240}Free:${goto 270}${color3}${fs_free /}
