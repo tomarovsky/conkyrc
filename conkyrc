@@ -1,19 +1,31 @@
+--[[
+#=================================================
+# Author  : Tomarovsky
+#=================================================
+]]
+
+
 conky.config = {
 
 	--Various settings
 
 	background = true,
-	update_interval = 1,
+	cpu_avg_samples = 2,
+	diskio_avg_samples = 10,
 	double_buffer = true,
+	if_up_strictness = 'address',
+	net_avg_samples = 2,
 	no_buffers = true,
-	imlib_cache_size = 10,
+	temperature_unit = 'celsius',
+	update_interval = 1,
+	imlib_cache_size = 0,
 
 	--Placement
 
 	alignment = 'top_right',
 	gap_x = 10,
-	gap_y = 35,
-	minimum_height = 700,
+	gap_y = 40,
+	minimum_height = 940,
 	minimum_width = 280,
 	maximum_width = 280,
 	own_window = true,
@@ -29,7 +41,7 @@ conky.config = {
 	border_outer_margin = 10,
 	draw_borders = false,
 	draw_graph_borders = false,
-	draw_shades = true,
+	draw_shades = false,
 	draw_outline = false,
 
 	--Textual
@@ -49,11 +61,10 @@ conky.config = {
 	own_window_type = 'desktop',
 
 	--Colours
-
-	default_color = '#F2E5BC',  				-- default color and border color
-	color1 = '#458588', 						-- title_color
-	color2 = '#d79921',							-- top memory or processe, graphs
-	color3 = '#F2E5BC',							-- text color
+	
+	color1 = '#bbc3c8',           -- title_color
+	color2 = '#d79921',           -- top memory or processes
+	color3 = '#F2E5BC',           -- text color, graphs
 };
 
 
@@ -61,45 +72,45 @@ conky.text = [[
 #------------+
 # INFO
 #------------+
-${color1}${font :size=14:bold}INFO ${hr 2}${font}
+${color1}${font :size=12:bold}INFO ${hr 1}${font}
 ${voffset 5}${color1}Kernel :$alignr${color3} $kernel
-${voffset 2}${color1}Uptime :$alignr${color3} $uptime
+${voffset 1}${color1}Uptime :$alignr${color3} $uptime
 #------------+
 # NETWORK
-#------------
-${voffset 10}${color1}${font :size=14:bold}NETWORK ${hr 2}${font}
-${voffset 2}${color1}Location: ${color3}${execi 60 curl ifconfig.co/city 2>/dev/null | tail }, ${execi 60 curl ifconfig.co/country 2>/dev/null | tail }${color2}
-${voffset 5}${color1}Public IP: ${color3}${execi 60 curl ifconfig.co 2>/dev/null | tail }${color2}
-${voffset -5}${if_existing /proc/net/route wlo1}
-${upspeedgraph wlo1 26,130 ffffd6 ffffd6}${alignr}${downspeedgraph wlo1 26,130 ffffd6 ffffd6}
-${color1}Up: ${color3}${upspeed wlo1}${color1}${goto 170}Down: ${color3}${downspeed wlo1}
-${color1}Sent: ${color3}${totalup wlo1}${color1}${goto 170}Received: ${color3}${totaldown wlo1}
-${endif}
-${if_existing /proc/net/route eth0}
-${upspeedgraph eth0 26,130 ffffd6 ffffd6}${alignr}${downspeedgraph eth0 26,130 ffffd6 ffffd6}
-${color1}Up: ${color3}${upspeed eth0}${color1}${goto 170}Down: ${color3}${downspeed eth0}
-${color1}Sent: ${color3}${totalup eth0}${color1}${goto 170}Received: ${color3}${totaldown eth0}
-${endif}
+#------------+
+${voffset 6}${color1}${font :size=12:bold}NETWORK ${hr 1}${font}
+${voffset 3}${color1}Location: $alignr${color3}${execi 60 curl ifconfig.co/city 2>/dev/null | tail }, ${execi 60 curl ifconfig.co/country 2>/dev/null | tail }${color2}
+${voffset 1}${color1}Wi-fi Network: ${alignr}${color3}${wireless_essid wlp2s0}
+${voffset 1}${color1}Public IP: ${alignr}${color3}${execi 60 curl ifconfig.co 2>/dev/null | tail }${color2}
+${voffset 1}${color1}Wi-fi IP: ${alignr}${color3}${addr wlp2s0}
+${voffset 1}${color1}${upspeedgraph "wlp2s0" 22,130 F2E5BC F2E5BC}${alignr}${color1}${downspeedgraph "wlp2s0" 22,130 F2E5BC F2E5BC}
+${voffset 1}${color1}Up: ${color3}${upspeedf wlp2s0} KiB/s${color1}${goto 210}Down: ${color3}${downspeedf wlp2s0} KiB/s
+${voffset 1}${color1}Sent: ${color3}${totalup wlp2s0}${color1}${goto 210}Received: ${color3}${totaldown wlp2s0}
+${voffset 1}${color1}Signal: ${color3}${wireless_link_qual_perc wlp2s0}% ${goto 90}${voffset 2}${color1}${wireless_link_bar 3 wlp2s0}
 #------------+
 #CPU
 #------------+
-${voffset -20}${color1}${font :size=14:bold}CPU ${hr 2}${font}
-${voffset 5}${color1}Name: $alignr${color3}${execi 6000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-16}
-${voffset 2}${color1}Temperature: $alignr${color3}${hwmon 1 temp 1} °C
-${voffset 2}${color1}Usage: $alignr${color3}${cpu}%
-${voffset 2}${color1}Freq: $alignr${color3}${freq_g} GHz
-${voffset 2}${color2}${cpugraph 26, 280 ffffd6 ffffd6 -l}
+${voffset 6}${color1}${font :size=12:bold}CPU ${hr 1}${font}
+${voffset 3}${color1}Name: $alignr${color3}${execi 6000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-16}
+${voffset 1}${color1}Temperature: $alignr${color3}${execi 5 sensors | grep CPU: | awk '{print $2}'}
+${voffset 1}${color1}Freq : ${color3}${freq_g} GHz$alignr${color1}Usage : ${color3}${cpu}%
+${voffset 1}${color1}${cpugraph 22, 280  F2E5BC F2E5BC -l}
 #------------+
 #CPU CORES
 #------------+
-${voffset 2}${color1}CPU CORES ${stippled_hr 3 1}
-${voffset 2}${color1}Core1${goto 60}${color3}${cpu cpu1}%${goto 90}${color2}${cpubar cpu1 12, 60}${color1}${goto 170}Core2${goto 210}${color3}${cpu cpu2}%${goto 240}${color2}${cpubar cpu2 12, 60}
-${voffset 2}${color1}Core3${goto 60}${color3}${cpu cpu3}%${goto 90}${color2}${cpubar cpu3 12, 60}${color1}${goto 170}Core4${goto 210}${color3}${cpu cpu4}%${goto 240}${color2}${cpubar cpu4 12, 60}
+${voffset 3}${color1} 1${goto 45}${color3}${cpu cpu1}%${goto 85}${color1}${cpubar cpu1 10, 60}${goto 170}${color1} 2${goto 195}${color3}${cpu cpu2}%${goto 235}${color1}${cpubar cpu2 10, 60}
+${voffset 1}${color1} 3${goto 45}${color3}${cpu cpu3}%${goto 85}${color1}${cpubar cpu3 10, 60}${goto 170}${color1} 4${goto 195}${color3}${cpu cpu4}%${goto 235}${color1}${cpubar cpu4 10, 60}
+${voffset 1}${color1} 5${goto 45}${color3}${cpu cpu5}%${goto 85}${color1}${cpubar cpu5 10, 60}${goto 170}${color1} 6${goto 195}${color3}${cpu cpu6}%${goto 235}${color1}${cpubar cpu6 10, 60}
+${voffset 1}${color1} 7${goto 45}${color3}${cpu cpu7}%${goto 85}${color1}${cpubar cpu7 10, 60}${goto 170}${color1} 8${goto 195}${color3}${cpu cpu8}%${goto 235}${color1}${cpubar cpu8 10, 60}
+${voffset 1}${color1} 9${goto 45}${color3}${cpu cpu9}%${goto 85}${color1}${cpubar cpu9 10, 60}${goto 170}${color1}10${goto 195}${color3}${cpu cpu10}%${goto 235}${color1}${cpubar cpu10 10, 60}
+${voffset 1}${color1}11${goto 45}${color3}${cpu cpu11}%${goto 85}${color1}${cpubar cpu11 10, 60}${goto 170}${color1}12${goto 195}${color3}${cpu cpu12}%${goto 235}${color1}${cpubar cpu12 10, 60}
+${voffset 1}${color1}13${goto 45}${color3}${cpu cpu13}%${goto 85}${color1}${cpubar cpu13 10, 60}${goto 170}${color1}14${goto 195}${color3}${cpu cpu14}%${goto 235}${color1}${cpubar cpu14 10, 60}
+${voffset 1}${color1}15${goto 45}${color3}${cpu cpu15}%${goto 85}${color1}${cpubar cpu15 10, 60}${goto 170}${color1}16${goto 195}${color3}${cpu cpu16}%${goto 235}${color1}${cpubar cpu16 10, 60}
 #------------+
 # PROCESSES
 #------------+
-${voffset 10}${color1}${font :size=14:bold}PROCESSES ${hr 2}${font}
-${voffset 5}${color1}Name${goto 190}CPU%${goto 230}MEM%${alignr}PID${color2}
+${voffset 6}${color1}${font :size=12:bold}PROCESSES ${hr 1}${font}
+${voffset 3}${color1}Name${goto 190}CPU%${goto 230}MEM%${alignr}PID${color2}
 ${top name 1}${goto 190}${top cpu 1}${goto 230}${top mem 1}${alignr}${top pid 1}${color3}
 ${top name 2}${goto 190}${top cpu 2}${goto 230}${top mem 2}${alignr}${top pid 2}
 ${top name 3}${goto 190}${top cpu 3}${goto 230}${top mem 3}${alignr}${top pid 3}
@@ -108,10 +119,10 @@ ${top name 5}${goto 190}${top cpu 5}${goto 230}${top mem 5}${alignr}${top pid 5}
 #------------+
 # MEMORY
 #------------+
-${voffset 10}${color1}${font :size=14:bold}MEMORY ${hr 2}${font}
-${voffset 5}${color1}Used: ${color3}$mem ($memperc%)${color1}${alignr}Free: ${color3}$memeasyfree
-${color2}${memgraph 26,280 ffffd6 ffffd6 -l}
-${voffset 5}${color1}Name${goto 190}MEM%${goto 230} MEM${alignr}PID${color2}
+${voffset 6}${color1}${font :size=12:bold}MEMORY ${hr 1}${font}
+${voffset 3}${color1}Used: ${color3}$mem ($memperc%)${color1}${alignr}Free: ${color3}$memeasyfree
+${color1}${memgraph 22,280 F2E5BC F2E5BC -l}
+${voffset 3}${color1}Name${goto 190}MEM%${goto 230} MEM${alignr}PID${color2}
 ${top_mem name 1}${goto 190}${top_mem mem 1}${goto 230} ${top_mem mem_res 1}${alignr}${top pid 1}${color3}
 ${top_mem name 2}${goto 190}${top_mem mem 2}${goto 230} ${top_mem mem_res 2}${alignr}${top pid 2}
 ${top_mem name 3}${goto 190}${top_mem mem 3}${goto 230} ${top_mem mem_res 3}${alignr}${top pid 3}
@@ -120,11 +131,10 @@ ${top_mem name 5}${goto 190}${top_mem mem 5}${goto 230} ${top_mem mem_res 5}${al
 #------------+
 # DISK
 #------------+
-${voffset 10}${color1}${font :size=14:bold}DISK ${hr 2}${font}
-${voffset 5}${diskiograph 26,280 ffffd6 ffffd6 -l}
-${color1}Disk I/O:${goto 70}${color3}${diskio}
-${voffset 1}${color2}${fs_bar 5 /}
-${voffset 2}${color1}Used: ${color3}${fs_used /}${color1}${goto 240}Free:${goto 270}${color3}${fs_free /}
-#------------+
+${voffset 6}${color1}${font :size=12:bold}DISK ${hr 1}${font}
+${color1}${diskiograph_read nvme0n1 22,130 F2E5BC F2E5BC} ${alignr}${diskiograph_write nvme0n1 22,130 F2E5BC F2E5BC}
+${voffset 1}${color1}Read: ${color3}${diskio_read nvme0n1}${goto 235}${color1}Write: ${goto 270}${color3}${diskio_write nvme0n1}
+${voffset 1}${color1}${fs_bar 4 /}
+${voffset 1}${color1}NVME: ${color3}${execi 5 sensors | grep Composite | awk '{print $2}'}${goto 170}${color1}Used: ${color3}${fs_used /}${color1}${goto 240}Free:${goto 270}${color3}${fs_free /}
 ]]
 
